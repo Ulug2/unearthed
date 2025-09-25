@@ -15,7 +15,7 @@ const renderGifts = async () => {
             const bottomContainer = document.createElement('div')
             bottomContainer.classList.add('bottom-container')
 
-            topContainer.style.backgroundImage = `url${gift.image}`
+            topContainer.style.backgroundImage = `url(${gift.image})`
 
             const giftName = document.createElement('h3')
             giftName.textContent = gift.name
@@ -40,6 +40,16 @@ const renderGifts = async () => {
     else {
         mainContent.textContent = "No Gifts Available for you darling!"
     }
+}
+
+
+const renderGift = async () => {
+    const requestedId = parseInt(window.location.href.split('/').pop())
+
+    const response = await fetch('/gifts')
+    const data = await response.json()
+
+    
 }
 
 renderGifts()
