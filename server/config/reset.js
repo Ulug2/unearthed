@@ -1,6 +1,6 @@
-import { pool } from './database.js';
-import giftData from '../data/gifts.js';
-import './dotenv.js';
+import { pool } from './database.js'
+import './dotenv.js'
+import giftData from '../data/gifts.js'
 
 const createGiftsTable = async () => {
     const createTableQuery = `
@@ -12,45 +12,47 @@ const createGiftsTable = async () => {
             pricePoint VARCHAR(10) NOT NULL,
             audience VARCHAR(255) NOT NULL,
             image VARCHAR(255) NOT NULL,
-            DESCRIPTION TEXT NOT NULL,
+            description TEXT NOT NULL,
             submittedBy VARCHAR(255) NOT NULL,
             submittedOn TIMESTAMP NOT NULL
         )
-    `;
+    `
 
     try {
         const res = await pool.query(createTableQuery)
-        console.log('Gifts table created successfully');
-    }
-    catch (error) {
-        console.error('Error creating gifts table', error);
+        console.log('🎉 gifts table created successfully')
+    } catch (err) {
+        console.error('⚠️ error creating gifts table', err)
     }
 }
 
 const seedGiftsTable = async () => {
-    await createGiftsTable();
+    await createGiftsTable()
 
     giftData.forEach((gift) => {
         const insertQuery = {
-            text: `
-                INSERT INTO gifts (name, pricePoint, audience, image, description, submittedBy, submittedOn)
-                VALUES ($1, $2, $3, $4, $5, $6, $7)
-            `
+            text: 'INSERT INTO gifts (name, pricePoint, audience, image, description, submittedBy, submittedOn) VALUES ($1, $2, $3, $4, $5, $6, $7)'
         }
 
-        const values = [gift.name, gift.pricePoint, gift.audience, gift.image, gift.description, gift.submittedBy, gift.submittedOn]
+        const values = [
+            gift.name,
+            gift.pricePoint,
+            gift.audience,
+            gift.image,
+            gift.description,
+            gift.submittedBy,
+            gift.submittedOn
+        ]
 
-        pool.query(insertQuery, values, (error, res) => {
-            if (error) {
-                console.error('Error seeding gifts table', error);
-                return;
+        pool.query(insertQuery, values, (err, res) => {
+            if (err) {
+                console.error('⚠️ error inserting gift', err)
+                return
             }
-            else {
-                console.log(`✅ ${gift.name} added successfully`)
-            }
+
+            console.log(`✅ ${gift.name} added successfully`)
         })
     })
-
 }
 
-seedGiftsTable();
+seedGiftsTable()
