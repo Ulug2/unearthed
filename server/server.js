@@ -1,5 +1,8 @@
 import express from 'express'
+import dotenv from './config/dotenv.js'
 import giftsRouter from './routes/gifts.js'
+
+
 
 const app = express();
 
@@ -14,6 +17,6 @@ app.get('/', (req, res) => {
 
 const PORT = process.env.PORT || 3001;
 
-app.listen(PORT, ()=> {
+app.listen(PORT, () => {
     console.log(`🚀 Server listening on http://localhost:${PORT}`)
 })
