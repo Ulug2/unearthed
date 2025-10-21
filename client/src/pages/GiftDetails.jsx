@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom'
 
 import React, {useState, useEffect} from 'react';
-import './GiftDetails.css'
+import '../css/GiftDetails.css'
 
 const GiftDetails = ({data}) => {
 
